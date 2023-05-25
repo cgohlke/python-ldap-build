@@ -1,0 +1,31 @@
+diff --git a/Configurations/10-main.conf b/Configurations/10-main.conf
+index f815a09b..320e09aa 100644
+--- a/Configurations/10-main.conf
++++ b/Configurations/10-main.conf
+@@ -1281,7 +1281,7 @@ my %targets = (
+                                        })),
+         defines          => add(picker(default => [], # works as type cast
+                                        debug   => [ "DEBUG", "_DEBUG" ])),
+-        lib_cflags       => add(sub { $disabled{shared} ? "/MT /Zl" : () }),
++        lib_cflags       => add(sub { $disabled{shared} ? "/MD /Zl" : () }),
+         # Following might/should appears controversial, i.e. defining
+         # /MDd without evaluating $disabled{shared}. It works in
+         # non-shared build because static library is compiled with /Zl
+@@ -1294,7 +1294,7 @@ my %targets = (
+         # prefer [non-debug] openssl.exe to be free from Micorosoft RTL
+         # redistributable.
+         bin_cflags       => add(picker(debug   => "/MDd",
+-                                       release => sub { $disabled{shared} ? "/MT" : () },
++                                       release => sub { $disabled{shared} ? "/MD" : () },
+                                       )),
+         bin_lflags       => add("/subsystem:console /opt:ref"),
+         ex_libs          => add(sub {
+@@ -1363,7 +1363,7 @@ my %targets = (
+             combine('/GF /Gy',
+                     sub { vc_wince_info()->{cflags}; },
+                     sub { `cl 2>&1` =~ /Version ([0-9]+)\./ && $1>=14
+-                              ? ($disabled{shared} ? " /MT" : " /MD")
++                              ? ($disabled{shared} ? " /MD" : " /MD")
+                               : " /MC"; }),
+         cppflags         => sub { vc_wince_info()->{cppflags}; },
+         lib_defines      => add("NO_CHMOD", "OPENSSL_SMALL_FOOTPRINT"),

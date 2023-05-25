@@ -1,0 +1,29 @@
+diff --git a/setup.cfg b/setup.cfg
+index fdb32fb..5d66bbf 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -11,12 +11,12 @@ license_file = LICENCE
+ 
+ # Define extra include and library dirs if needed. distutils adds non
+ # standard library_dirs as rpath.
+-# library_dirs = /usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64
+-# include_dirs = /usr/include /usr/local/include
++library_dirs = lib
++include_dirs = include
+ 
+ # These defines needs OpenLDAP built with
+ # ./configure --with-cyrus-sasl --with-tls
+-defines = HAVE_SASL HAVE_TLS
++defines = HAVE_TLS HAVE_LIBLDAP_R
+ 
+ extra_compile_args =
+ extra_objects =
+@@ -25,7 +25,7 @@ extra_objects =
+ # instead
+ # Example for full-featured build:
+ # Support for StartTLS/LDAPS, SASL bind and reentrant libldap_r.
+-#libs = ldap_r lber
++libs = olber32_a oldap32 oldap_r libssl libcrypto ws2_32 gdi32 advapi32 crypt32 user32
+ 
+ # Installation options
+ [install]
