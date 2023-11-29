@@ -2,7 +2,7 @@
 @echo on
 setlocal
 
-:: set OPENLDAP_VER=openldap-2.4.59
+:: set OPENLDAP_VER=openldap-2.5.16
 :: set VS_PLATFORM=x64
 
 curl -L -o %OPENLDAP_VER%.tgz https://www.openldap.org/software/download/OpenLDAP/openldap-release/%OPENLDAP_VER%.tgz
