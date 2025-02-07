@@ -38,7 +38,7 @@ jobs:
       - uses: pypa/cibuildwheel@v2.16.2
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
   build_x86:
@@ -68,7 +68,7 @@ jobs:
       - uses: pypa/cibuildwheel@v2.16.2
         env:
           CIBW_ARCHS_WINDOWS: x86
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
   # ARM64 wheel is broken
@@ -95,6 +95,6 @@ jobs:
   #      env:
   #        CIBW_SKIP: "pp* cp36* cp37* cp38* cp39* cp310*"
   #        CIBW_ARCHS_WINDOWS: ARM64
-  #    - uses: actions/upload-artifact@v3
+  #    - uses: actions/upload-artifact@v4
   #      with:
   #        path: ./wheelhouse/*.whl
