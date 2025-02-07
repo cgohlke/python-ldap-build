@@ -40,6 +40,7 @@ jobs:
           CIBW_ARCHS_WINDOWS: AMD64
       - uses: actions/upload-artifact@v4
         with:
+          name: artifact-AMD64
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
@@ -70,6 +71,7 @@ jobs:
           CIBW_ARCHS_WINDOWS: x86
       - uses: actions/upload-artifact@v4
         with:
+          name: artifact-x86
           path: ./wheelhouse/*.whl
   # ARM64 wheel is broken
   # build_arm64:
@@ -97,4 +99,5 @@ jobs:
   #        CIBW_ARCHS_WINDOWS: ARM64
   #    - uses: actions/upload-artifact@v4
   #      with:
+  #        name: artifact-ARM64
   #        path: ./wheelhouse/*.whl
