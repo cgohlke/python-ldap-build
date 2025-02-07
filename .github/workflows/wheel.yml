@@ -23,7 +23,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN64A-masm
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/setup-msbuild@v1.1
+      - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x64
       - uses: ilammy/msvc-dev-cmd@v1
@@ -52,7 +52,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN32
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/setup-msbuild@v1.1
+      - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x86
       - uses: ilammy/msvc-dev-cmd@v1
@@ -83,7 +83,7 @@ jobs:
   #    OPENSSL_CONFIG: VC-WIN64-ARM
   #  steps:
   #    - uses: actions/checkout@v4
-  #    - uses: microsoft/setup-msbuild@v1.1
+  #    - uses: microsoft/setup-msbuild@v1.3
   #      with:
   #        msbuild-architecture: arm64
   #    - uses: ilammy/msvc-dev-cmd@v1
