@@ -8,7 +8,7 @@ env:
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
-  CIBW_SKIP: "pp* cp36*"
+  CIBW_SKIP: "pp* cp36* cp37* cp38* cp39*"
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN64A-masm
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/setup-msbuild@v1.1
+      - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x64
       - uses: ilammy/msvc-dev-cmd@v1
@@ -35,12 +35,13 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.16.2
+      - uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_ARCHS_WINDOWS: AMD64
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: wheels-win-amd64
   build_x86:
     name: Build x86 wheels
     runs-on: ${{ matrix.os }}
@@ -52,7 +53,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN32
     steps:
       - uses: actions/checkout@v4
-      - uses: microsoft/setup-msbuild@v1.1
+      - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x86
       - uses: ilammy/msvc-dev-cmd@v1
@@ -65,12 +66,13 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.16.2
+      - uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_ARCHS_WINDOWS: x86
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
+          name: wheels-win32
   # ARM64 wheel is broken
   # build_arm64:
   #  name: Build ARM64 wheels
@@ -83,7 +85,7 @@ jobs:
   #    OPENSSL_CONFIG: VC-WIN64-ARM
   #  steps:
   #    - uses: actions/checkout@v4
-  #    - uses: microsoft/setup-msbuild@v1.1
+  #    - uses: microsoft/setup-msbuild@v1.3
   #      with:
   #        msbuild-architecture: arm64
   #    - uses: ilammy/msvc-dev-cmd@v1
@@ -91,10 +93,11 @@ jobs:
   #        arch: amd64_arm64
   #    - run: build.cmd
   #      shell: cmd
-  #    - uses: pypa/cibuildwheel@v2.16.2
+  #    - uses: pypa/cibuildwheel@v2.22.0
   #      env:
   #        CIBW_SKIP: "pp* cp36* cp37* cp38* cp39* cp310*"
   #        CIBW_ARCHS_WINDOWS: ARM64
-  #    - uses: actions/upload-artifact@v3
+  #    - uses: actions/upload-artifact@v4
   #      with:
   #        path: ./wheelhouse/*.whl
+  #        name: wheels-win-arm64
