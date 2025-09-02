@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
 
 env:
-  OPENSSL_VER: openssl-1.1.1w
+  OPENSSL_VER: openssl-3.0.17
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
-  CIBW_SKIP: "pp* cp36* cp37* cp38* cp39*"
+  CIBW_SKIP: "cp38* cp39* cp310*"
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
 
 jobs:
@@ -17,12 +17,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2022]
+        os: [windows-latest]
     env:
       VS_PLATFORM: x64
       OPENSSL_CONFIG: VC-WIN64A-masm
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x64
@@ -35,7 +35,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.22.0
+      - uses: pypa/cibuildwheel@v3.1.4
         env:
           CIBW_ARCHS_WINDOWS: AMD64
       - uses: actions/upload-artifact@v4
@@ -47,12 +47,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2022]
+        os: [windows-latest]
     env:
       VS_PLATFORM: Win32
       OPENSSL_CONFIG: VC-WIN32
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: microsoft/setup-msbuild@v1.3
         with:
           msbuild-architecture: x86
@@ -66,7 +66,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.22.0
+      - uses: pypa/cibuildwheel@v3.1.4
         env:
           CIBW_ARCHS_WINDOWS: x86
       - uses: actions/upload-artifact@v4
@@ -79,12 +79,12 @@ jobs:
   #  runs-on: ${{ matrix.os }}
   #  strategy:
   #    matrix:
-  #      os: [windows-2022]
+  #      os: [windows-latest]
   #  env:
   #    VS_PLATFORM: ARM64
   #    OPENSSL_CONFIG: VC-WIN64-ARM
   #  steps:
-  #    - uses: actions/checkout@v4
+  #    - uses: actions/checkout@v5
   #    - uses: microsoft/setup-msbuild@v1.3
   #      with:
   #        msbuild-architecture: arm64
@@ -93,7 +93,7 @@ jobs:
   #        arch: amd64_arm64
   #    - run: build.cmd
   #      shell: cmd
-  #    - uses: pypa/cibuildwheel@v2.22.0
+  #    - uses: pypa/cibuildwheel@v3.1.4
   #      env:
   #        CIBW_SKIP: "pp* cp36* cp37* cp38* cp39* cp310*"
   #        CIBW_ARCHS_WINDOWS: ARM64

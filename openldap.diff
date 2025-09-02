@@ -1,3 +1,16 @@
+diff --git a/libraries/libldap/tls_o.c b/libraries/libldap/tls_o.c
+index 498f805..00e8570 100644
+--- a/libraries/libldap/tls_o.c
++++ b/libraries/libldap/tls_o.c
+@@ -655,7 +655,7 @@ tlso_get_cert( SSL *s )
+ 	if (SSL_get_verify_result(s)) {
+ 		return NULL;
+ 	}
+-	return SSL_get_peer_certificate(s);
++	return SSL_get1_peer_certificate(s);
+ }
+ 
+ static int
 diff --git a/include/ac/socket.h b/include/ac/socket.h
 index 7b9252d..f6344b9 100644
 --- a/include/ac/socket.h
