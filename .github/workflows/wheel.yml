@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 env:
-  OPENSSL_VER: openssl-3.0.17
+  OPENSSL_VER: openssl-3.0.18
   OPENLDAP_VER: openldap-2.4.59
-  PYTHONLDAP_VER: python-ldap-3.4.4
+  PYTHONLDAP_VER: python-ldap-3.4.5
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
   CIBW_SKIP: "cp38* cp39* cp310*"
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
@@ -23,7 +23,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN64A-masm
     steps:
       - uses: actions/checkout@v5
-      - uses: microsoft/setup-msbuild@v1.3
+      - uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x64
       - uses: ilammy/msvc-dev-cmd@v1
@@ -35,7 +35,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v3.1.4
+      - uses: pypa/cibuildwheel@v3.2.1
         env:
           CIBW_ARCHS_WINDOWS: AMD64
       - uses: actions/upload-artifact@v4
@@ -53,7 +53,7 @@ jobs:
       OPENSSL_CONFIG: VC-WIN32
     steps:
       - uses: actions/checkout@v5
-      - uses: microsoft/setup-msbuild@v1.3
+      - uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: x86
       - uses: ilammy/msvc-dev-cmd@v1
@@ -66,38 +66,40 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v3.1.4
+      - uses: pypa/cibuildwheel@v3.2.1
         env:
           CIBW_ARCHS_WINDOWS: x86
       - uses: actions/upload-artifact@v4
         with:
           path: ./wheelhouse/*.whl
           name: wheels-win32
-  # ARM64 wheel is broken
-  # build_arm64:
-  #  name: Build ARM64 wheels
-  #  runs-on: ${{ matrix.os }}
-  #  strategy:
-  #    matrix:
-  #      os: [windows-latest]
-  #  env:
-  #    VS_PLATFORM: ARM64
-  #    OPENSSL_CONFIG: VC-WIN64-ARM
-  #  steps:
-  #    - uses: actions/checkout@v5
-  #    - uses: microsoft/setup-msbuild@v1.3
-  #      with:
-  #        msbuild-architecture: arm64
-  #    - uses: ilammy/msvc-dev-cmd@v1
-  #      with:
-  #        arch: amd64_arm64
-  #    - run: build.cmd
-  #      shell: cmd
-  #    - uses: pypa/cibuildwheel@v3.1.4
-  #      env:
-  #        CIBW_SKIP: "pp* cp36* cp37* cp38* cp39* cp310*"
-  #        CIBW_ARCHS_WINDOWS: ARM64
-  #    - uses: actions/upload-artifact@v4
-  #      with:
-  #        path: ./wheelhouse/*.whl
-  #        name: wheels-win-arm64
+  build_arm64:
+    name: Build ARM64 wheels
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-11-arm]
+    env:
+      VS_PLATFORM: ARM64
+      OPENSSL_CONFIG: VC-WIN64-ARM
+    steps:
+      - uses: actions/checkout@v5
+      - uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: arm64
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: arm64
+      - run: build_openssl.cmd
+        shell: cmd
+      - run: build_openldap.cmd
+        shell: cmd
+      - run: build_python-ldap.cmd
+        shell: cmd
+      - uses: pypa/cibuildwheel@v3.2.1
+        env:
+          CIBW_ARCHS_WINDOWS: ARM64
+      - uses: actions/upload-artifact@v4
+        with:
+          path: ./wheelhouse/*.whl
+          name: wheels-win-arm64

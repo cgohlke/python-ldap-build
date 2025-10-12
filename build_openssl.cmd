@@ -2,7 +2,7 @@
 @echo on
 setlocal
 
-:: set OPENSSL_VER=openssl-3.0.17
+:: set OPENSSL_VER=openssl-3.0.18
 :: set OPENSSL_CONFIG=VC-WIN64A-masm
 :: set PATH=%PATH%;X:\Perl\bin
 
