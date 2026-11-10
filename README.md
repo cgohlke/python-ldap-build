@@ -4,6 +4,6 @@ Build [python-ldap](https://github.com/python-ldap/python-ldap) wheels for Windo
 
 The wheels can be downloaded from the [Releases](https://github.com/cgohlke/python-ldap-build/releases) page.
 
-Install a wheel on the command line, for example for Python 3.14 64-bit:
+Install a wheel on the command line, for example for Python 3.15 64-bit:
 
-    py.exe -3.14 -m pip install python_ldap-3.4.7-cp314-cp314-win_amd64.whl
+    py.exe -3.15 -m pip install python_ldap-3.4.8-cp315-cp315-win_amd64.whl

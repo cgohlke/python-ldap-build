@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 env:
-  OPENSSL_VER: openssl-3.5.7
+  OPENSSL_VER: openssl-3.5.9
   OPENLDAP_VER: openldap-2.4.59
-  PYTHONLDAP_VER: python-ldap-3.4.7
+  PYTHONLDAP_VER: python-ldap-3.4.8
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
   CIBW_SKIP: "cp39* cp310* cp311*"
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
@@ -37,7 +37,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v4.2.0
+      - uses: pypa/cibuildwheel@v4.3.5
         env:
           CIBW_ARCHS_WINDOWS: AMD64
       - uses: actions/upload-artifact@v7
@@ -70,7 +70,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v4.2.0
+      - uses: pypa/cibuildwheel@v4.3.5
         env:
           CIBW_ARCHS_WINDOWS: x86
       - uses: actions/upload-artifact@v7
@@ -85,8 +85,8 @@ jobs:
         os: [windows-11-arm]
     env:
       VS_PLATFORM: ARM64
-      VS_PLATFORM_TOOLSET: v143
-      VC_VER: 17.0
+      VS_PLATFORM_TOOLSET: v145
+      VC_VER: 18.0
       OPENSSL_CONFIG: VC-WIN64-ARM
     steps:
       - uses: actions/checkout@v7
@@ -102,7 +102,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v4.2.0
+      - uses: pypa/cibuildwheel@v4.3.5
         env:
           CIBW_ARCHS_WINDOWS: ARM64
       - uses: actions/upload-artifact@v7
