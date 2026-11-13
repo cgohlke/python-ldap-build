@@ -1,18 +1,45 @@
+diff --git a/python-ldap.diff b/python-ldap.diff
+index 4594355..e69de29 100644
+--- a/python-ldap.diff
++++ b/python-ldap.diff
+@@ -1,18 +0,0 @@
+-diff --git a/setup.cfg b/setup.cfg
+-index 7be8324..70f1122 100644
+---- a/setup.cfg
+-+++ b/setup.cfg
+-@@ -2,9 +2,12 @@
+- license_file = LICENCE
+- 
+- [_ldap]
+--defines = HAVE_SASL HAVE_TLS
+-+defines = HAVE_TLS HAVE_LIBLDAP_R
+- extra_compile_args = 
+- extra_objects = 
+-+library_dirs = lib
+-+include_dirs = include
+-+libs = olber32_a oldap32 oldap_r libssl libcrypto ws2_32 gdi32 advapi32 crypt32 user32
+- 
+- [bdist_rpm]
+- provides = python-ldap
 diff --git a/setup.cfg b/setup.cfg
-index 7be8324..70f1122 100644
+index 5a7c06a..535add7 100644
 --- a/setup.cfg
 +++ b/setup.cfg
-@@ -2,9 +2,12 @@
- license_file = LICENCE
+@@ -16,10 +16,14 @@ license_file = LICENCE
  
- [_ldap]
+ # These defines needs OpenLDAP built with
+ # ./configure --with-cyrus-sasl --with-tls
 -defines = HAVE_SASL HAVE_TLS
 +defines = HAVE_TLS HAVE_LIBLDAP_R
- extra_compile_args = 
- extra_objects = 
+ 
+-extra_compile_args =
+-extra_objects =
++extra_compile_args = 
++extra_objects = 
++
 +library_dirs = lib
 +include_dirs = include
 +libs = olber32_a oldap32 oldap_r libssl libcrypto ws2_32 gdi32 advapi32 crypt32 user32
  
- [bdist_rpm]
- provides = python-ldap
+ # Uncomment this if your libldap is not thread-safe and you need libldap_r
+ # instead
